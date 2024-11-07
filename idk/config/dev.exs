@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :idk, Idk.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "kitsaras19977",
   database: "idk_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
