@@ -1,4 +1,5 @@
 defmodule IdkWeb do
+  alias Idk.{Repo, User}
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
@@ -16,6 +17,11 @@ defmodule IdkWeb do
   below. Instead, define any helper function in modules
   and import those modules here.
   """
+  def current_user(conn) do
+    user_id = Plug.Conn.get_session(conn, :user_id)
+    if user_id, do: Repo.get(User, user_id), else: nil
+  end
+
 
   def controller do
     quote do

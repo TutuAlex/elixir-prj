@@ -1,5 +1,8 @@
 defmodule IdkWeb.Router do
+#  import IdkWeb.Plugs.AuthenticateUser
   use IdkWeb, :router
+
+
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -17,7 +20,23 @@ defmodule IdkWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/about", PageController, :about
+    get "/about/:input", PageController, :about
+
+    get "/signup", UserController, :new
+    post "/signup", UserController, :create
+
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+    delete "/logout", SessionController, :delete
   end
+
+  scope "/", IdkWeb do
+    pipe_through [:browser, IdkWeb.Plugs.AuthenticateUser]  # Ensure user is logged in
+
+    get "/dashboard", DashboardController, :index  # Dashboard route (protected)
+  end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", IdkWeb do

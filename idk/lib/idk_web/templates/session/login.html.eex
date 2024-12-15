@@ -1,0 +1,65 @@
+<h1>Login</h1>
+
+<%= form_for @conn, Routes.session_path(@conn, :create), [id: "login-form"], fn f -> %>
+  <div>
+    <%= label f, :email %>
+    <%= text_input f, :email, id: "email" %>
+    <%= error_tag f, :email %>
+    <span id="email-error" class="error-message"></span>
+  </div>
+  <div>
+    <%= label f, :password %>
+    <%= password_input f, :password, id: "password" %>
+    <%= error_tag f, :password %>
+    <span id="password-error" class="error-message"></span>
+  </div>
+  <div>
+    <%= submit "Login", id: "login-button" %>
+  </div>
+<% end %>
+<%= link "Signup Instead", to: Routes.user_path(@conn, :new), method: :get %>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("login-form");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const emailError = document.getElementById("email-error");
+    const passwordError = document.getElementById("password-error");
+
+    form.addEventListener("submit", function (event) {
+      let isValid = true;
+
+      // Reset error messages
+      emailError.textContent = "";
+      passwordError.textContent = "";
+
+      // Check email field
+      if (!emailInput.value.trim()) {
+        emailError.textContent = "Email cannot be empty.";
+        isValid = false;
+      } else if (!validateEmail(emailInput.value)) {
+        emailError.textContent = "Please enter a valid email address.";
+        isValid = false;
+      }
+
+      // Check password field
+      if (!passwordInput.value.trim()) {
+        passwordError.textContent = "Password cannot be empty.";
+        isValid = false;
+      }
+
+      // Prevent form submission if not valid
+      if (!isValid) {
+        event.preventDefault();
+      }
+    });
+
+    // Email validation function
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+  });
+</script>

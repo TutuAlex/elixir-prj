@@ -35,6 +35,7 @@ defmodule IdkWeb.Endpoint do
     plug Phoenix.Ecto.CheckRepoStatus, otp_app: :idk
   end
 
+  plug :print
   plug Phoenix.LiveDashboard.RequestLogger,
     param_key: "request_logger",
     cookie_key: "request_logger"
@@ -51,4 +52,10 @@ defmodule IdkWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug IdkWeb.Router
+
+
+  def print(conn, _opts) do
+    IO.puts("YOOOOOOOOOOOOOOOOOOOOO")
+    conn
+  end
 end

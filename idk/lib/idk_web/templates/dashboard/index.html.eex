@@ -1,0 +1,5 @@
+<h1>Welcome to your Dashboard!</h1>
+
+<p>You are logged in <%= @user.email %>. This is a protected page.</p>
+
+<%= link "Log out", to: Routes.session_path(@conn, :delete), method: :delete %>
